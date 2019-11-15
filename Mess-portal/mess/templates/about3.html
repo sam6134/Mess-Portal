@@ -1,0 +1,41 @@
+{% extends "layout1.html" %}
+{% block content %}
+<div class="container" style="margin-top:20px" >
+  <div class="row">
+
+    <div class="col-md-6"><h1 style="font-size:62px; padding-top: 100px; color: white;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px; text-shadow: 3px 2px grey; font-weight:bold; text-decoration: none">Word Cloud & filtered comments</h1></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-4" style="padding-right:50px;"><img  style="width: 450px; height: 400px" src={{ addr }}></div>
+
+  </div>
+</div>
+{% for post in posts %}
+
+<div style="width: 600px;
+  border: 2px solid black;
+  box-shadow: 10px 10px 5px black;
+  padding: 50px;
+  margin: 20px;background-image: url('static/img/compbg.jpg')">
+          <img class="w3-circle w3-right" style="width: 50px; hieght: 50px" src="{{ url_for('static', filename='img/' + post.author.image_file) }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <h4 style="color: white">{{ post.author.username }}</h4>
+              <small class="text-muted">{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+            </div>
+            <h2><a class="article-content" href="{{url_for('complaint', post_id=post.id)}}">{{ post.title }}</a></h2>
+            <p style="color: white; font-size: 20px;text-shadow: 2px 1px black;font-family:'Comic Sans MS'">{{ post.content }}</p>
+              {% if post.senti=="Review: Positive" %}
+            <p style="color: green">{{ post.senti }}</p>
+              {% elif post.senti=="Review: Negative" %}
+              <p style="color: red">{{ post.senti }}</p>
+              {% else %}
+              <p style="color: blue">{{ post.senti }}</p>
+              {% endif %}
+            <p style="color: white">{{ post.funny }}</p>
+          </div>
+        </div>
+    {% endfor %}
+{% endblock content %}

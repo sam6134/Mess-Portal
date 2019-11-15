@@ -1,0 +1,18 @@
+{% extends "layout1.html" %}
+{% block content %}
+    {% for post in posts %}
+        <div >
+            <div style="width: 600px;
+  border: 2px solid black;
+  box-shadow: 10px 10px 5px black;
+  padding: 50px;
+  margin: 20px;background-image: url('static/img/menubg.jpg')">
+            <h3><a class="article-title" href="{{url_for('menu', post_id=post.id)}}">{{ post.title }}</a></h3>
+            <h5 style="color: white">{{ post.breakfast }}</h5>
+                <h5 style="color: white" class="article-content">{{ post.lunch }}</h5>
+                <h5 style="color: white" class="article-content">{{ post.dinner }}</h5>
+          </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}

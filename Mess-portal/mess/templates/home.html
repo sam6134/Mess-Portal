@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<title>MESS PORTAL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+<style>
+body, html {height: 100%}
+body,h1,h2,h3,h4,h5,h6 {font-family: "Amatic SC", sans-serif}
+.menu {display: none}
+.bgimg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("static/img/bg3.jpg");
+  min-height: 90%;
+}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top w3-hide-small">
+  <div class="w3-bar w3-xlarge w3-black w3-opacity w3-hover-opacity-off" id="myNavbar">
+    <a style="font-size:62px; padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px; text-shadow: 3px 2px grey; font-weight:bold; text-decoration: none " href="/">Home</a>
+        <ul>
+          {% if current_user.username == "Samarth" and current_user.is_authenticated %}
+              <a style="font-size:32px;padding-right: 80px;font-weight:bold; text-decoration: none"class=" active nav-link" href="{{ url_for('display_blogs') }}">Update Menu</a>
+              <a style="font-size:32px;padding-right: 80px;font-weight:bold; text-decoration: none"class=" active nav-link" href="{{ url_for('display_complaints') }}">Feedbacks</a>
+              <a style="font-size:32px;padding-right: 680px;font-weight:bold; text-decoration: none"class=" active nav-link" href="{{ url_for('account') }}">Welcome, Admin</a>
+              <a style="font-size:32px;padding-right: 80px;font-weight:bold; text-decoration: none"class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+          {% elif current_user.is_authenticated %}
+            <a style="font-size:32px;padding-right: 80px;font-weight:bold; text-decoration: none"class=" active nav-link" href="{{ url_for('new_complaint') }}">Add a Feedback</a>
+            <a style="font-size:32px;padding-right: 680px;font-weight:bold; text-decoration: none"class=" active nav-link" href="{{ url_for('account') }}">Account</a>
+            <a style="font-size:32px;padding-right: 80px;font-weight:bold; text-decoration: none"class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+            <a class="nav-item nav-link" style="font-size:32px;font-weight:bold; text-decoration: none" href="{{ url_for('login') }}">Login</a>
+            <a class="nav-item nav-link" style="font-size:32px;font-weight:bold;padding-top: 20px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;text-decoration: none" href="{{ url_for('register') }}">Register</a>
+          {% endif %}
+        </ul>
+  </div>
+</div>
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home" style="background-img:url('static/img/bg3.jpg')">
+  <div class="w3-display-bottomleft w3-padding">
+    {% with messages=get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    <span class="w3-tag w3-xlarge">Portal open from 10am to 12pm</span>
+  </div>
+  <div class="w3-display-middle w3-center">
+    <span class="w3-text-white w3-hide-small" style="font-size:100px">the<br>MESS PORTAL</span>
+    <span class="w3-text-white w3-hide-large w3-hide-medium" style="font-size:60px"><b>the<br>MESS PORTAL</b></span>
+    <p><a href="#menu" class="w3-button w3-xxlarge w3-black">Let me see the menu</a></p>
+  </div>
+</header>
+
+<!-- Menu Container -->
+<div class="w3-container w3-black w3-padding-64 w3-xxlarge" id="menu">
+  <div class="w3-content">
+
+    <h1 class="w3-center w3-jumbo" style="margin-bottom:64px">THE MENU</h1>
+    <div class="w3-row w3-center w3-border w3-border-dark-grey">
+      <a href="javascript:void(0)" onclick="openMenu(event, 'Pizza');" id="myLink">
+        <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Breakfast</div>
+      </a>
+      <a href="javascript:void(0)" onclick="openMenu(event, 'Pasta');">
+        <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Lunch</div>
+      </a>
+      <a href="javascript:void(0)" onclick="openMenu(event, 'Starter');">
+        <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Dinner</div>
+      </a>
+    </div>
+
+    <div id="Pizza" class="w3-container menu w3-padding-32 w3-white">
+      {% for post in posts %}
+      <h1><b>{{post.title}}</b></h1>
+      <p class="w3-text-grey">{{post.breakfast}}</p>
+      <hr>
+      {% endfor %}
+    </div>
+
+    <div id="Pasta" class="w3-container menu w3-padding-32 w3-white">
+      {% for post in posts %}
+      <h1><b>{{post.title}}</b></h1>
+      <p class="w3-text-grey">{{post.lunch}}</p>
+      <hr>
+      {% endfor %}
+    </div>
+
+
+    <div id="Starter" class="w3-container menu w3-padding-32 w3-white">
+      {% for post in posts %}
+      <h1><b>{{post.title}}</b></h1>
+      <p class="w3-text-grey">{{post.dinner}}</p>
+      <hr>
+      {% endfor %}
+    </div><br>
+
+  </div>
+</div>
+
+<!-- About Container -->
+<div class="w3-container w3-padding-64 w3-red w3-grayscale w3-xlarge" id="about">
+  <div class="w3-content">
+    <h1 class="w3-center w3-jumbo" style="margin-bottom:64px">About</h1>
+    <p>This portal was made by a technical team for INNOVATE for IIT.f you are facing some issues on this site or you have any suggestions</p>
+    <p><strong>The Creator?</strong> Mr. Tecnician for this portal<img src="static/img/ae75aaa0d2520e1a.jpg" style="width:150px" class="w3-circle w3-right" alt="Chef"></p>
+    <p>We are proud of our interiors.</p>
+    <img src="static/img/bg3.jpg" style="width:100%" class="w3-margin-top w3-margin-bottom" alt="Restaurant">
+  </div>
+</div>
+
+<!-- Image of location/map -->
+<img src="static/img/bg3.jpg" class="w3-image w3-greyscale" style="width:100%;">
+
+<!-- Contact -->
+<div class="w3-container w3-padding-64 w3-blue-grey w3-grayscale-min w3-xlarge">
+  <div class="w3-content">
+    <h1 class="w3-center w3-jumbo" style="margin-bottom:64px">Contact</h1>
+    <p>If you are facing some issues on this site or you have any suggestions</p>
+    <p><span class="w3-tag">FYI!</span> If your Bug report is effective, then its chances to get fixed are higher. So fixing a bug depends upon how effectively you report it. Reporting a bug is nothing but skill and I will explain how to achieve this skill. </p>
+    <p class="w3-xxlarge"><strong>ANY</strong> type of suggestions or technical bugs please report in form</p>
+    <form action="/action_page.php" target="_blank">
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Name" required name="Name"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="datetime-local" placeholder="Date and time" required name="date" value="2017-11-16T20:00"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Please specify any bug or suggestion" required name="Message"></p>
+      <p><button class="w3-button w3-light-grey w3-block" type="submit">SEND MESSAGE</button></p>
+    </form>
+  </div>
+</div>
+
+<script>
+// Tabbed Menu
+function openMenu(evt, menuName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("menu");
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+     tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+  }
+  document.getElementById(menuName).style.display = "block";
+  evt.currentTarget.firstElementChild.className += " w3-red";
+}
+document.getElementById("myLink").click();
+</script>
+
+</body>
+</html>

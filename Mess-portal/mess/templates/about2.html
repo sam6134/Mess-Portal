@@ -1,0 +1,84 @@
+{% extends "layout1.html" %}
+{% block content %}
+<div style="width: 600px;
+  border: 2px solid black;
+  box-shadow: 10px 10px 5px black;
+  padding: 50px;
+  margin: 20px;background-image: url('static/img/formbg.png')">
+            <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Filter Complaints(Generate Word-Cloud)</legend>
+            <div class="form-group">
+                {{ form.start_date.label(class="form-control-label") }}
+                {% if form.start_date.errors %}
+                    {{ form.start_date(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.start_date.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.start_date(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.end_date.label(class="form-control-label") }}
+                {% if form.end_date.errors %}
+                    {{ form.end_date(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.end_date.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.end_date(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+        </div>
+    {% for post in posts.items %}
+        <div style="width: 600px;
+  border: 2px solid black;
+  box-shadow: 10px 10px 5px black;
+  padding: 50px;
+  margin: 20px;background-image: url('static/img/compbg.jpg')">
+          <img class="w3-circle w3-right" style="width: 50px; hieght: 50px" src="{{ url_for('static', filename='img/' + post.author.image_file) }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <h4 style="color: white">{{ post.author.username }}</h4>
+              <small class="text-muted">{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+            </div>
+            <h2><a class="article-content" href="{{url_for('newcomplaint', post_id=post.id)}}">{{ post.title }}</a></h2>
+            <p style="color: white; font-size: 20px;text-shadow: 2px 1px black;font-family:'Comic Sans MS'">{{ post.content }}</p>
+              {% if post.senti=="Review: Positive" %}
+            <p style="color: green">{{ post.senti }}</p>
+              {% elif post.senti=="Review: Negative" %}
+              <p style="color: red">{{ post.senti }}</p>
+              {% else %}
+              <p style="color: blue">{{ post.senti }}</p>
+              {% endif %}
+              {% if post.funny=="Funny!" %}
+            <p style="color: yellow">{{ post.funny }}</p>
+              {% else %}
+              <p style="color: white">{{ post.funny }}</p>
+              {% endif %}
+          </div>
+        </div>
+    {% endfor %}
+{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if posts.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('display_complaints', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('display_complaints', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+{% endblock content %}

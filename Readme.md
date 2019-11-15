@@ -29,8 +29,8 @@ Open [localhost:5000](http://127.0.0.1:5000/) in the browser
   <img src="https://github.com/sam6134/Mess-Portal/blob/master/screenshots/Screen%20Shot%202019-11-15%20at%207.08.11%20PM.png" width="264" alt="Screenshot"/>
 </p>
 
-
+### License
 <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat" width="80" />
-Note that Mess_Wala is distributed under the [MIT License](http://opensource.org/licenses/MIT).
+Note this Mess portal is distributed under the [MIT License](http://opensource.org/licenses/MIT).
 
 Your feedback, ideas, suggestions are most welcome!

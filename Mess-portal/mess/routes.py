@@ -17,7 +17,7 @@ import tensorflow as tf
 import pickle
 global graph
 nltk.download('wordnet')
-graph = tf.get_default_graph()
+graph = tf.compat.v1.get_default_graph()
 funny_words=['lol','lmao','laugh','laughing','kidding']
 with open('mess/vect.pkl','rb') as f:
     vectorizer=pickle.load(f)
@@ -40,7 +40,7 @@ Tokenizer =pickle.load(open("mess/TOKENIZER.pickle", "rb"))
 '''vectorizer = TfidfVectorizer(min_df=4, max_df=0.8,
                             sublinear_tf=True, use_idf=True)'''
 classifier_liblinear = pickle.load(open('mess/funny.pkl','rb'))
-sentiment = pickle.load(open('mess/Sentiment_Model.pickle','rb'))
+sentiment = pickle.load(open('mess/funny.pkl','rb'))
 @app.route("/")
 @app.route("/home")
 def home():

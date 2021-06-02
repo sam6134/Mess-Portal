@@ -61,7 +61,7 @@ termcolor==1.1.0
 threadpoolctl==2.1.0
 tqdm==4.59.0
 typing-extensions==3.7.4.3
-urllib3==1.26.4
+urllib3==1.26.5
 Werkzeug==1.0.1
 wordcloud==1.8.1
 wrapt==1.12.1
